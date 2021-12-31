@@ -1,32 +1,32 @@
-let input = require("fs").readFileSync("../dev/stdin", "utf8").trim().split("\n");
-// let input = require("fs").readFileSync("/dev/stdin", "utf8").trim().split("\n");
-const [N, K] = input.shift().split(' ').map(Number);
+// let input = require("fs").readFileSync("../dev/stdin", "utf8").trim().split("\n");
+let input = require("fs").readFileSync("/dev/stdin", "utf8").trim().split("\n");
+let num = input.shift().split(' ').map(Number);
 
-console.log("수빈 : ", N)
-console.log("동생 : ", K)
+let n = Number(input[0].split(" ")[0]);
+let k = Number(input[0].split(" ")[1]);
+let ch = new Array(100001).fill(0);
+let ans = 0;
 
-// 1초에 x+1 / x-1 / x*2
-// 동생이 더 작을 경우 무조건 x-1 만 가능
-// 둘이 같으면 움직일 필요 없음
-
-let count = 0
-
-const visit = new Array(10000)
-const queue = [];
-
-queue.push([N, 0]);
-visit[N] = 1;
-while (queue.length) {
-    const [cur, time] = queue.shift();
-    console.log(queue)
-    if (cur === K) return time;
-    for (next of [cur - 1, cur + 1, cur * 2]) {
-        if (!visit[next] && next >= 0 && next <= 100000) {
-            visit[next] = 1;
-            queue.push([next, time + 1]);
+function BFS() {
+    let queue = [];
+    queue.push(n);
+    ch[n] = 1;
+    let cnt = 0;
+    while (queue.length) {
+        let len = queue.length;
+        for (let i = 0; i < len; i++) {
+            let x = queue.shift();
+            if (x === k) return cnt;
+            for (let nx of [x - 1, x + 1, x * 2]) {
+                if (nx >= 0 && nx <= 100000 && ch[nx] === 0) {
+                    ch[nx] = 1;
+                    queue.push(nx);
+                }
+            }
         }
+        cnt++;
     }
 }
 
-console.log(visit)
-console.log(queue)
+ans = BFS();
+console.log(ans);
