@@ -1,6 +1,5 @@
 // let input = require("fs").readFileSync("../dev/stdin", "utf8").trim().split("\n");
 let input = require("fs").readFileSync("/dev/stdin", "utf8").trim().split("\n");
-let num = input.shift().split(' ').map(Number);
 
 let n = Number(input[0].split(" ")[0]);
 let k = Number(input[0].split(" ")[1]);
