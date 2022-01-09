@@ -12,7 +12,6 @@ const dir = [[0, 1], [0, -1], [1, 0], [-1, 0]]
 
 const stack = [[0, 0, 1, 0]]
 
-arr[0][0] = 1
 visited[0][0][0] = true
 
 function bfs() {
@@ -20,7 +19,7 @@ function bfs() {
         const [x, y, dis, drill] = stack.shift();
 
         if (x === N - 1 && y === M - 1) {
-            return arr[N - 1][M - 1]
+            return dis
         }
 
         for (let i = 0; i < 4; i++) {
@@ -28,14 +27,12 @@ function bfs() {
             const yPos = y + dir[i][1];
 
             if (0 <= xPos && 0 <= yPos && xPos < N && yPos < M) {
-                if (arr[xPos][yPos] === 0 && !visited[xPos][yPos][dis]) {
-                    visited[xPos][yPos][dis] = true
-                    stack.push([xPos, yPos, dis]);
-                    arr[xPos][yPos] = arr[x][y] + 1
-                } else if (arr[xPos][yPos] === 1 && dis === 0 && !visited[xPos][yPos][1]) {
+                if (arr[xPos][yPos] === 0 && !visited[xPos][yPos][drill]) {
+                    visited[xPos][yPos][drill] = true
+                    stack.push([xPos, yPos, dis + 1, drill]);
+                } else if (arr[xPos][yPos] === 1 && !visited[xPos][yPos][1] && drill === 0) {
                     visited[xPos][yPos][1] = true
                     stack.push([xPos, yPos, dis + 1, drill + 1]);
-                    arr[xPos][yPos] = arr[x][y] + 1
                 }
             }
         }
